@@ -1,9 +1,12 @@
 import Layout from "./components/Layout";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const App = () => {
   return (
     <>
-      <Layout></Layout>
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <Layout></Layout>
+      </ThemeProvider>
     </>
   );
 };
