@@ -7,7 +7,7 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <div>
+    <div className="mx-auto max-w-2xl">
       <Header />
       <main>{children}</main>
     </div>
