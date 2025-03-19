@@ -4,6 +4,8 @@ import { setTodos } from "../store/todoSlice";
 import { RootState } from "../store/store";
 import { fetchTodos } from "../api/todoApi";
 import { fetchCategories } from "../api/categoryApi";
+import { Badge } from "@/components/ui/badge";
+import { toast } from "sonner";
 
 const TodoList = () => {
   const dispatch = useDispatch();
@@ -44,12 +46,14 @@ const TodoList = () => {
           >
             <div className="flex justify-between items-center">
               <h2 className="text-lg font-semibold">{todo.text}</h2>
-              <span
-                className="px-3 py-1 text-sm rounded-lg text-white"
-                style={{ backgroundColor: categoryDetails.color }}
+              <Badge
+                style={{
+                  backgroundColor: categoryDetails.color,
+                  color: "white",
+                }}
               >
                 {categoryDetails.name}
-              </span>
+              </Badge>
             </div>
             <p className="text-gray-500 dark:text-gray-300">
               {todo.description}

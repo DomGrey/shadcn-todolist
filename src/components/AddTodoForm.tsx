@@ -6,6 +6,8 @@ import { fetchCategories } from "../api/categoryApi";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
+
 import {
   Select,
   SelectContent,
@@ -53,6 +55,8 @@ const AddTodoForm = () => {
     // Fetch updated todos
     const updatedTodos = await fetchTodos();
     dispatch(setTodos(updatedTodos));
+
+    toast.success(`Todo "${text}" added!`);
 
     // Clear form
     setText("");
