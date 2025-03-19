@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setTodos } from "../store/todoSlice";
 import { fetchTodos } from "../api/todoApi";
+import { fetchCategories } from "../api/categoryApi";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -16,13 +17,24 @@ import {
 const AddTodoForm = () => {
   const dispatch = useDispatch();
   const [text, setText] = useState("");
-  const [category, setCategory] = useState("General");
+  const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
+  const [categories, setCategories] = useState<{ id: string; name: string }[]>(
+    []
+  );
+
+  useEffect(() => {
+    const loadCategories = async () => {
+      const data = await fetchCategories();
+      setCategories(data);
+      setCategory(data.length > 0 ? data[0].id : "");
+    };
+    loadCategories();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!text.trim()) return;
+    if (!text.trim() || !category) return;
 
     const newTodo = {
       id: Date.now().toString(),
@@ -44,7 +56,7 @@ const AddTodoForm = () => {
 
     // Clear form
     setText("");
-    setCategory("General");
+    setCategory(categories.length > 0 ? categories[0].id : "");
     setDescription("");
   };
 
@@ -59,14 +71,16 @@ const AddTodoForm = () => {
         required
       />
 
-      <Select onValueChange={setCategory} defaultValue={category}>
+      <Select onValueChange={setCategory} value={category}>
         <SelectTrigger className="w-full">
           <SelectValue placeholder="Select Category" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="General">General</SelectItem>
-          <SelectItem value="Work">Work</SelectItem>
-          <SelectItem value="Personal">Personal</SelectItem>
+          {categories.map((cat) => (
+            <SelectItem key={cat.id} value={cat.id}>
+              {cat.name}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
 
