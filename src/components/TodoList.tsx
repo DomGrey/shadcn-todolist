@@ -6,6 +6,12 @@ import { fetchTodos } from "../api/todoApi";
 import { fetchCategories } from "../api/categoryApi";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
 
 const TodoList = () => {
   const dispatch = useDispatch();
@@ -55,9 +61,14 @@ const TodoList = () => {
                 {categoryDetails.name}
               </Badge>
             </div>
-            <p className="text-gray-500 dark:text-gray-300">
-              {todo.description}
-            </p>
+            <Accordion type="single" collapsible className="w-full mt-2">
+              <AccordionItem value={todo.id}>
+                <AccordionTrigger className="text-gray-500 dark:text-gray-300"></AccordionTrigger>
+                <AccordionContent>
+                  <p>{todo.description || "No description available."}</p>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </div>
         );
       })}
