@@ -5,6 +5,7 @@ import { RootState } from "../store/store";
 import { fetchTodos } from "../api/todoApi";
 import { fetchCategories } from "../api/categoryApi";
 import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 import {
   Accordion,
@@ -40,6 +41,18 @@ const TodoList = () => {
       }
     );
   };
+  const handleToggleComplete = async (todoId: string, completed: boolean) => {
+    await fetch(`http://localhost:3000/todos/${todoId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ completed: !completed }),
+    });
+
+    const updatedTodos = await fetchTodos();
+    dispatch(setTodos(updatedTodos));
+
+    toast.success(`Todo marked as ${!completed ? "completed" : "incomplete"}`);
+  };
 
   return (
     <div className="space-y-4">
@@ -48,10 +61,24 @@ const TodoList = () => {
         return (
           <div
             key={todo.id}
-            className="p-4 border rounded-lg bg-white dark:bg-gray-800 shadow"
+            className="border rounded-lg bg-white dark:bg-gray-800 shadow p-4"
           >
             <div className="flex justify-between items-center">
-              <h2 className="text-lg font-semibold">{todo.text}</h2>
+              <div className="flex items-center gap-3">
+                <Checkbox
+                  checked={todo.completed}
+                  onCheckedChange={() =>
+                    handleToggleComplete(todo.id, todo.completed)
+                  }
+                />
+                <h2
+                  className={`text-lg font-semibold ${
+                    todo.completed ? "line-through text-gray-400" : ""
+                  }`}
+                >
+                  {todo.text}
+                </h2>
+              </div>
               <Badge
                 style={{
                   backgroundColor: categoryDetails.color,
