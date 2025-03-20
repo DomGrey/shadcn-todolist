@@ -5,6 +5,7 @@ import AddTodoForm from "./components/AddTodoForm";
 import { Toaster } from "sonner";
 import TodoStats from "./components/TodoStats";
 import TodoFilter from "./components/TodoFilter";
+import PaginationControls from "./components/PaginationControls";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
           <AddTodoForm />
           <TodoFilter />
           <TodoList />
+          <PaginationControls />
           <TodoStats />
         </Layout>
       </ThemeProvider>

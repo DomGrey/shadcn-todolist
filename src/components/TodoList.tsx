@@ -14,6 +14,7 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 import { RxCross2 } from "react-icons/rx";
+import PaginationControls from "./PaginationControls";
 
 const TodoList = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,12 @@ const TodoList = () => {
   );
   const selectedStatus = useSelector(
     (state: RootState) => state.filter.selectedStatus
+  );
+  const currentPage = useSelector(
+    (state: RootState) => state.pagination.currentPage
+  );
+  const todosPerPage = useSelector(
+    (state: RootState) => state.pagination.todosPerPage
   );
   const [categories, setCategories] = useState<
     { id: string; name: string; color: string }[]
@@ -86,16 +93,20 @@ const TodoList = () => {
     return matchesCategory && matchesStatus;
   });
 
+  const indexOfLastTodo = currentPage * todosPerPage;
+  const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
+  const currentTodos = filteredTodos.slice(indexOfFirstTodo, indexOfLastTodo);
+
   return (
     <div className="space-y-4 mt-4">
-      {filteredTodos.map((todo) => {
+      {currentTodos.map((todo) => {
         const categoryDetails = getCategoryDetails(todo.category);
         return (
           <div
             key={todo.id}
-            className="border rounded-lg bg-white dark:bg-gray-800 shadow p-4"
+            className="border rounded-lg bg-white dark:bg-gray-800 shadow p-4 flex justify-between items-center"
           >
-            <div className="flex justify-between items-center gap4">
+            <div className="flex items-center gap-4">
               <Checkbox
                 checked={todo.completed}
                 onCheckedChange={() =>
@@ -109,6 +120,8 @@ const TodoList = () => {
               >
                 {todo.text}
               </h2>
+            </div>
+            <div className="flex items-center gap-4">
               <Badge
                 style={{
                   backgroundColor: categoryDetails.color,
@@ -117,7 +130,7 @@ const TodoList = () => {
               >
                 {categoryDetails.name}
               </Badge>
-              <Accordion type="single" collapsible className="w-full mt-2">
+              <Accordion type="single" collapsible className=" mt-2">
                 <AccordionItem value={todo.id}>
                   <AccordionTrigger className="text-gray-500 dark:text-gray-300"></AccordionTrigger>
                   <AccordionContent>
