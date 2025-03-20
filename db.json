@@ -3,7 +3,7 @@
     {
       "id": "1",
       "text": "Learn React",
-      "completed": false,
+      "completed": true,
       "category": "1",
       "description": "Study the basics of React framework"
     },

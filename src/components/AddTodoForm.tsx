@@ -65,7 +65,7 @@ const AddTodoForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex text-center space-y-4 p-4">
+    <form onSubmit={handleSubmit} className="flex text-center gap-2 mb-4">
       <Input
         className="w-full"
         type="text"
@@ -76,7 +76,7 @@ const AddTodoForm = () => {
       />
 
       <Select onValueChange={setCategory} value={category}>
-        <SelectTrigger className="w-full">
+        <SelectTrigger>
           <SelectValue placeholder="Select Category" />
         </SelectTrigger>
         <SelectContent>

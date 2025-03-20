@@ -70,7 +70,7 @@ const TodoList = () => {
     toast.error(`Todo "${todoText}" deleted!`);
   };
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 mb-4">
       {todos.map((todo) => {
         const categoryDetails = getCategoryDetails(todo.category);
         return (
