@@ -6,7 +6,6 @@ import { fetchTodos } from "../api/todoApi";
 import { fetchCategories } from "../api/categoryApi";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import {
   Accordion,
@@ -19,6 +18,12 @@ import { RxCross2 } from "react-icons/rx";
 const TodoList = () => {
   const dispatch = useDispatch();
   const todos = useSelector((state: RootState) => state.todos.todos);
+  const selectedCategory = useSelector(
+    (state: RootState) => state.filter.selectedCategory
+  );
+  const selectedStatus = useSelector(
+    (state: RootState) => state.filter.selectedStatus
+  );
   const [categories, setCategories] = useState<
     { id: string; name: string; color: string }[]
   >([]);
@@ -69,9 +74,21 @@ const TodoList = () => {
 
     toast.error(`Todo "${todoText}" deleted!`);
   };
+
+  const filteredTodos = todos.filter((todo) => {
+    const matchesCategory =
+      selectedCategory === "All" || todo.category === selectedCategory;
+    const matchesStatus =
+      selectedStatus === "All" ||
+      (selectedStatus === "Completed" && todo.completed) ||
+      (selectedStatus === "Incomplete" && !todo.completed);
+
+    return matchesCategory && matchesStatus;
+  });
+
   return (
-    <div className="space-y-4 mb-4">
-      {todos.map((todo) => {
+    <div className="space-y-4 mt-4">
+      {filteredTodos.map((todo) => {
         const categoryDetails = getCategoryDetails(todo.category);
         return (
           <div

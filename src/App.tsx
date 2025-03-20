@@ -4,6 +4,7 @@ import TodoList from "./components/TodoList";
 import AddTodoForm from "./components/AddTodoForm";
 import { Toaster } from "sonner";
 import TodoStats from "./components/TodoStats";
+import TodoFilter from "./components/TodoFilter";
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
         <Layout>
           <Toaster position="top-right" />
           <AddTodoForm />
+          <TodoFilter />
           <TodoList />
           <TodoStats />
         </Layout>

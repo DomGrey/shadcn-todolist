@@ -5,7 +5,6 @@ import { fetchTodos } from "../api/todoApi";
 import { fetchCategories } from "../api/categoryApi";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 
 import {
@@ -87,13 +86,6 @@ const AddTodoForm = () => {
           ))}
         </SelectContent>
       </Select>
-
-      {/* <Textarea
-        placeholder="Description (optional)"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      /> */}
-
       <Button type="submit">+ Todo</Button>
     </form>
   );
