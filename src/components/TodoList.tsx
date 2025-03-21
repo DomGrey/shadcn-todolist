@@ -52,11 +52,14 @@ const TodoList = () => {
     );
   };
   const handleToggleComplete = async (todoId: string, completed: boolean) => {
-    await fetch(`http://localhost:3000/todos/${todoId}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ completed: !completed }),
-    });
+    await fetch(
+      `https://wholesale-amusing-sandalwood.glitch.me/todos/${todoId}`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ completed: !completed }),
+      }
+    );
 
     const updatedTodos = await fetchTodos();
     dispatch(setTodos(updatedTodos));
@@ -110,7 +113,7 @@ const TodoList = () => {
                 <Checkbox
                   className="cursor-pointer"
                   checked={todo.completed}
-                  onCheckedChange={(checked) => {
+                  onCheckedChange={() => {
                     handleToggleComplete(todo.id, todo.completed);
                   }}
                   onClick={(e) => e.stopPropagation()}
