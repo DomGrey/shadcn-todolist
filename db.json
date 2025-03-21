@@ -17,7 +17,7 @@
     {
       "id": "3",
       "text": "Go for a run",
-      "completed": false,
+      "completed": true,
       "category": "4",
       "description": "Jog around the neighborhood for 30 minutes"
     },
