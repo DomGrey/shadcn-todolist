@@ -7,12 +7,6 @@ import { fetchCategories } from "../api/categoryApi";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
-// import {
-//   Accordion,
-//   AccordionItem,
-//   AccordionTrigger,
-//   AccordionContent,
-// } from "@/components/ui/accordion";
 import { RxCross2 } from "react-icons/rx";
 import EditTodoDialog from "./EditTodoDialog";
 import { SlArrowDown } from "react-icons/sl";
@@ -114,6 +108,7 @@ const TodoList = () => {
             <div className=" flex justify-between items-center">
               <div className="flex items-center gap-4">
                 <Checkbox
+                  className="cursor-pointer"
                   checked={todo.completed}
                   onCheckedChange={(checked) => {
                     handleToggleComplete(todo.id, todo.completed);
@@ -139,14 +134,6 @@ const TodoList = () => {
                 </Badge>
                 <SlArrowDown />
                 <EditTodoDialog todo={todo} />
-                {/* <Accordion type="single" collapsible className=" mt-2">
-                <AccordionItem value={todo.id}>
-                  <AccordionTrigger className="text-gray-500 dark:text-gray-300"></AccordionTrigger>
-                  <AccordionContent>
-                    <p>{todo.description || "No description available."}</p>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion> */}
                 <RxCross2
                   size={24}
                   className="cursor-pointer"

@@ -65,10 +65,7 @@ const EditTodoDialog = ({ todo }: { todo: any }) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <FaPencil
-          size={18}
-          className="cursor-pointer text-gray-500 hover:text-blue-600 transition"
-        />
+        <FaPencil size={18} className="cursor-pointer" />
       </DialogTrigger>
       <DialogContent className="max-w-md">
         <DialogHeader>

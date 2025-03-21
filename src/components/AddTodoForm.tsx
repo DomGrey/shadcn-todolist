@@ -61,7 +61,7 @@ const AddTodoForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex text-center gap-2 mb-4">
+    <form onSubmit={handleSubmit} className="flex text-center gap-2 mb-4 py-4">
       <Input
         className="w-full"
         type="text"
