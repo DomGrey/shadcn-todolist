@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setTodos } from "../store/todoSlice";
 import { RootState } from "../store/store";
-import { fetchTodos } from "../api/todoApi";
+import { fetchTodos, deleteTodo } from "../api/todoApi";
 import { fetchCategories } from "../api/categoryApi";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -14,7 +14,8 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 import { RxCross2 } from "react-icons/rx";
-import PaginationControls from "./PaginationControls";
+import EditTodoDialog from "./EditTodoDialog";
+import { SlArrowDown } from "react-icons/sl";
 
 const TodoList = () => {
   const dispatch = useDispatch();
@@ -72,9 +73,7 @@ const TodoList = () => {
     const confirmed = confirm(`Are you sure you want to delete "${todoText}"?`);
     if (!confirmed) return;
 
-    await fetch(`http://localhost:3000/todos/${todoId}`, {
-      method: "DELETE",
-    });
+    await deleteTodo(todoId);
 
     const updatedTodos = await fetchTodos();
     dispatch(setTodos(updatedTodos));
@@ -98,7 +97,7 @@ const TodoList = () => {
   const currentTodos = filteredTodos.slice(indexOfFirstTodo, indexOfLastTodo);
 
   return (
-    <div className="space-y-4 mt-4">
+    <div className="space-y-3 mt-4">
       {currentTodos.map((todo) => {
         const categoryDetails = getCategoryDetails(todo.category);
         return (
@@ -130,6 +129,8 @@ const TodoList = () => {
               >
                 {categoryDetails.name}
               </Badge>
+              <EditTodoDialog todo={todo} />
+              <SlArrowDown />
               <Accordion type="single" collapsible className=" mt-2">
                 <AccordionItem value={todo.id}>
                   <AccordionTrigger className="text-gray-500 dark:text-gray-300"></AccordionTrigger>

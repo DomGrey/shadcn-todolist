@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setTodos } from "../store/todoSlice";
-import { fetchTodos } from "../api/todoApi";
+import { fetchTodos, addTodo } from "../api/todoApi";
 import { fetchCategories } from "../api/categoryApi";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import { FaPlus } from "react-icons/fa6";
 
 import {
   Select,
@@ -45,11 +46,7 @@ const AddTodoForm = () => {
       description,
     };
 
-    await fetch("http://localhost:3000/todos", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newTodo),
-    });
+    await addTodo(newTodo);
 
     // Fetch updated todos
     const updatedTodos = await fetchTodos();
@@ -86,7 +83,9 @@ const AddTodoForm = () => {
           ))}
         </SelectContent>
       </Select>
-      <Button type="submit">+ Todo</Button>
+      <Button type="submit">
+        <FaPlus /> Add
+      </Button>
     </form>
   );
 };
